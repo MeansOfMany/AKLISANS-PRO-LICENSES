@@ -1,0 +1,14 @@
+*
+!/.gitignore
+!/README.md
+!/licenses.json
+!/licenses.json.public.pem
+
+# Secret material and customer records are never publishable.
+*.accdb
+*.mdb
+*.dpapi
+*.pfx
+*.p12
+*.key
+*-private.pem
