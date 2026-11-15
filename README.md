@@ -1,14 +1,9 @@
-# AKLİSANS PRO public license catalog repository template
+# AKLİSANS PRO imzalı lisans kataloğu
 
-This repository publishes the current AKLİSANS PRO signed license catalog. It is public-read so customer computers can download the catalog anonymously. Only the AKLİSANS PRO management computer publishes updates, through the GitHub CLI session for the `MeansOfMany` owner.
+Güncel DERSPLAN PRO sürümleri `licenses-v2.json` dosyasını anonim HTTPS üzerinden okur. Katalog yalnızca lisans kodu eşleştirme özeti, ürün, tarihler, durum, terminal sınırı ve imzalı anahtar geçişi içerir. Müşteri iletişim bilgileri, tam aktivasyon kodları ve özel anahtarlar yayımlanmaz.
 
-## Files to publish from the AKLİSANS PRO management computer
+Mevcut kök açık anahtar istemci uygulamasında sabittir. Yeni imza anahtarı ancak bu kökten doğrulanan geçiş zinciriyle kabul edilir. Katalog ve açık anahtar aynı Git commit'iyle yayımlanır.
 
-- `licenses.json` — the latest RSA-PSS signed catalog prepared by the management app.
-- `licenses.json.public.pem` — the matching public verification key, distributed to customer builds and optionally mirrored here.
+Eski `licenses.json` dosyası önceki istemcilerin uyumluluğu için korunur. Yeni yenileme ve iptal akışını almak için DERSPLAN PRO 4.4.0 veya üzeri kullanılmalıdır. Müşterinin mevcut tek lisans kodu değişmez.
 
-The customer client downloads only `licenses.json` over normal certificate-validated HTTPS. It does not need a GitHub account, token, or write access. The matching PEM is for controlled distribution and pinning in client trust configuration; clients must never trust an arbitrary key fetched from the same location as the catalog.
-
-Keep repository write credentials on the AKLİSANS PRO management computer in GitHub CLI's credential store. The management publisher verifies the owner and public visibility, rejects every root entry outside its explicit allowlist, creates a signed monotonically increasing catalog, writes only the four allowlisted files, and reads back the catalog to verify signature and revision. Never add activation codes, customer names/contact details, Access databases/backups, TLS private keys, or any RSA private key. The `.gitignore` is additional protection and is not the publication allowlist.
-
-Catalog entries contain only full activation-code hashes, product codes, dates, status, terminal limits, revision, UTC publication time, and RSA-PSS signature. An unsuccessful publication remains pending locally with a bounded retry delay and visible management-app status; a successful central database operation is never presented as a successful GitHub publication unless the read-back check passes.
+Lisans süresi yıllıktır; son başarılı çevrimiçi doğrulamadan itibaren en fazla 30 gün çevrimdışı kullanım ve lisans bitiminden sonra en fazla 3 gün ek süre uygulanır. Bu süreler birbirine eklenerek 33 günlük çevrimdışı yetki oluşturmaz. Çevrimdışı cihaz iptali ancak bağlantı kurduğunda veya mevcut çevrimdışı süresi dolduğunda öğrenebilir.
